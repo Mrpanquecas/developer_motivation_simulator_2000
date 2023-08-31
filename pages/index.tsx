@@ -12,17 +12,11 @@ import {
   WindowHeader,
 } from "react95";
 import CalculateMotivationWindow from "../components/CalculateMotivationWindow";
-
-interface IFormInput {
-  scope: number;
-  caffeine: number;
-  deadlines: number;
-  interesting: number;
-}
+import TFormInput from "../interfaces/MotivationForm.type";
 
 export default function Home() {
   const [calculateMotivation, setCalculateMotivation] = useState(false);
-  const { handleSubmit, control } = useForm<IFormInput>({
+  const { handleSubmit, control, getValues } = useForm<TFormInput>({
     defaultValues: {
       scope: 5,
       caffeine: 0,
@@ -31,7 +25,7 @@ export default function Home() {
     },
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<TFormInput> = (data) => {
     console.log(data);
     setCalculateMotivation(true);
   };
@@ -129,7 +123,12 @@ export default function Home() {
                 name="caffeine"
                 control={control}
                 render={({ field }) => (
-                  <NumberInput {...field} min={0} max={99} />
+                  <NumberInput
+                    {...field}
+                    className="caffeine"
+                    min={0}
+                    max={99}
+                  />
                 )}
               />
               <Button type="submit" className="mt-4">
@@ -139,7 +138,7 @@ export default function Home() {
           </WindowContent>
         </Window>
       </div>
-      {calculateMotivation && <CalculateMotivationWindow />}
+      {calculateMotivation && <CalculateMotivationWindow data={getValues()} />}
       <footer className="flex w-full justify-center">
         <a
           href="https://potatoveloper.vercel.app"

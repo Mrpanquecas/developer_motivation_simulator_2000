@@ -9,3 +9,8 @@ main {
   @apply m-0 h-full w-full p-0 font-sans;
   background: rgb(0, 128, 128);
 }
+
+.caffeine > div::before,
+#progress_bar > div::before {
+  @apply !h-full !w-full;
+}
